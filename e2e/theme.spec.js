@@ -37,7 +37,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("theme toggle switches between dark and light mode", async ({ page }) => {
-  await page.goto("/dashboard");
+  await page.goto("/dashboard", { waitUntil: "load" });
+
+  // Wait for the dashboard to fully render
+  await expect(page.getByRole("heading", { name: /dashboard/i })).toBeVisible({ timeout: 30000 });
 
   const themeToggle = page.getByRole("button", { name: "Toggle theme" });
   await expect(themeToggle).toBeVisible();

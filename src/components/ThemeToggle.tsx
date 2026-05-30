@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type SVGProps } from "react";
+import { type SVGProps } from "react";
 import { useTheme } from "./ThemeContext";
 
 const SunIcon = (props: SVGProps<SVGSVGElement>) => (
@@ -34,17 +34,6 @@ const MoonIcon = (props: SVGProps<SVGSVGElement>) => (
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted || !theme) {
-    return (
-      <div className="inline-flex h-10 w-32 items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)] px-4" />
-    );
-  }
 
   const isDark = theme === "dark";
 
