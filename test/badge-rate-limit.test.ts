@@ -79,6 +79,17 @@ describe('badge-rate-limit', () => {
       expect(getBadgeClientIp(req)).toBe('10.0.0.2');
     });
 
+    it('verify cf-connecting-ip has precedence over x-forwarded-for', () => {
+      const req = {
+        headers: new Headers({
+          'cf-connecting-ip': '203.0.113.9',
+          'x-forwarded-for': '192.168.1.1, 10.0.0.1'
+        })
+      } as unknown as NextRequest;
+
+      expect(getBadgeClientIp(req)).toBe('203.0.113.9');
+    });
+
     it('verify fallback to "unknown" when no IP available', () => {
       const req = {
         headers: new Headers()
